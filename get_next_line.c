@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:21:53 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/09 14:45:53 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/09 15:55:18 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,28 +81,36 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 int	get_next_line(int fd, char **line)
 {
 	int		ret;
-	char	buffer[BUFFER_SIZE];
+	char	buffer[BUFFER_SIZE + 1];
 	static char	*remainder;
+	int i; //loop counter, remove before handing in
+	int found;
 	
 	ret = 999;
+	i = 1;
+	found = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
 	while (ret > 0)
 	{
-		if (remainder != 0)
-		{
-			*line = ft_strdup(remainder);
-			ft_bzero(remainder, ft_strlen(remainder));
-		}
+		ft_bzero(buffer, BUFFER_SIZE + 1);
+		
 		ret = read(fd, buffer, BUFFER_SIZE);
-		printf("ret?: %d\n", ret);
 		if (ret == 0)
 			break ;
-		int j = find_newline(buffer);
-		*line = ft_substr(buffer, 0, j);
-		printf("line: %s\n", *line);
-		remainder = ft_substr(buffer, j + 1, ft_strlen(buffer) - j);
-		printf("remainder: %s\n", remainder);
+		size_t j = find_newline(buffer, &found);
+		if (found == 0)
+		{
+			remainder = ft_strdup(buffer);
+		}
+		if (found == 1)
+		{
+			*line = ft_strjoin(remainder, ft_substr(buffer, 0, j));
+			ft_bzero(remainder, ft_strlen(remainder));
+			remainder = ft_substr(buffer, j + 1, ft_strlen(buffer) - j);
+		}
+		printf("remainder %d: %s\n", i, remainder);
+		i++;
 	}
 	return (ret);
 }
