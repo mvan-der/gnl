@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:23:29 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/09 15:29:47 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/09 17:12:34 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stddef.h>
 #include <stdlib.h>
 
-size_t		ft_strlen(const char *s)
+size_t	ft_strlen(const char *s)
 {
 	size_t	i;
 
@@ -54,19 +54,64 @@ char	*ft_strjoin(char const *s1, char const *s2)
 	return (newstr);
 }
 
-int	find_newline(char *buffer, int *found)
+void	*ft_memset(void *s, int c, size_t n)
 {
-	int i;
+	size_t			i;
+	unsigned char	*a;
 
 	i = 0;
-	while (buffer[i] && i < BUFFER_SIZE)
+	a = s;
+	while (i < n)
 	{
-		if (buffer[i] == '\n')
-		{
-			*found = 1;
-			break ;
-		}
+		a[i] = (unsigned char)c;
 		i++;
 	}
-	return (i);
+	return (a);
+}
+
+char	*ft_strdup(const char *s)
+{
+	char	*dest;
+	int		i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	dest = malloc(i + 1);
+	if (dest == 0)
+		return (0);
+	i = 0;
+	while (s[i] != '\0')
+	{
+		dest[i] = s[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
+}
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	char	*dest;
+	size_t	i;
+	size_t	check;
+
+	check = ft_strlen(s);
+	dest = malloc(sizeof(char) * len + 1);
+	if (dest == 0)
+		return (0);
+	i = 0;
+	if (start > check)
+	{
+		dest[i] = '\0';
+		return (dest);
+	}
+	while (s[start] != '\0' && i < len)
+	{
+		dest[i] = s[start];
+		i++;
+		start++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

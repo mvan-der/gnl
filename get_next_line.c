@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:21:53 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/09 15:55:18 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/09 17:28:26 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,102 +15,52 @@
 #include <unistd.h>
 #include <stdio.h>
 
-void	ft_bzero(void *s, size_t n)
+int	find_newline(char *buffer, int *found)
 {
-	size_t			i;
-	unsigned char	*a;
-	unsigned char	b;
+	int	i;
 
 	i = 0;
-	a = s;
-	b = 0;
-	while (i < n)
+	while (buffer[i] && i < BUFFER_SIZE)
 	{
-		a[i] = b;
+		if (buffer[i] == '\n')
+		{
+			*found = 1;
+			break ;
+		}
 		i++;
 	}
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*dest;
-	int		i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	dest = malloc(i + 1);
-	if (dest == 0)
-		return (0);
-	i = 0;
-	while (s[i] != '\0')
-	{
-		dest[i] = s[i];
-		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-char	*ft_substr(const char *s, unsigned int start, size_t len)
-{
-	char	*dest;
-	size_t	i;
-	size_t	check;
-
-	check = ft_strlen(s);
-	dest = malloc(sizeof(char) * len + 1);
-	if (dest == 0)
-		return (0);
-	i = 0;
-	if (start > check)
-	{
-		dest[i] = '\0';
-		return (dest);
-	}
-	while (s[start] != '\0' && i < len)
-	{
-		dest[i] = s[start];
-		i++;
-		start++;
-	}
-	dest[i] = '\0';
-	return (dest);
+	return (i);
 }
 
 int	get_next_line(int fd, char **line)
 {
-	int		ret;
-	char	buffer[BUFFER_SIZE + 1];
+	int			read_ret;
+	char		buffer[BUFFER_SIZE + 1];
 	static char	*remainder;
-	int i; //loop counter, remove before handing in
-	int found;
-	
-	ret = 999;
-	i = 1;
+	int			found;
+	size_t		j;
+	int i = 0;
+	read_ret = 999;
 	found = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
-	while (ret > 0)
+	while (read_ret > 0)
 	{
-		ft_bzero(buffer, BUFFER_SIZE + 1);
-		
-		ret = read(fd, buffer, BUFFER_SIZE);
-		if (ret == 0)
+		ft_memset(buffer, 0, BUFFER_SIZE + 1);
+		read_ret = read(fd, buffer, BUFFER_SIZE);
+		if (read_ret == 0)
 			break ;
-		size_t j = find_newline(buffer, &found);
+		j = find_newline(buffer, &found);
 		if (found == 0)
-		{
 			remainder = ft_strdup(buffer);
-		}
 		if (found == 1)
 		{
 			*line = ft_strjoin(remainder, ft_substr(buffer, 0, j));
-			ft_bzero(remainder, ft_strlen(remainder));
+			ft_memset(remainder, 0, ft_strlen(remainder));
 			remainder = ft_substr(buffer, j + 1, ft_strlen(buffer) - j);
 		}
 		printf("remainder %d: %s\n", i, remainder);
 		i++;
 	}
-	return (ret);
+	return (read_ret);
 }
