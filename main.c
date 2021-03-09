@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/01 10:26:16 by mvan-der      #+#    #+#                 */
-/*   Updated: 2020/12/01 11:28:09 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/09 12:48:28 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@ int main()
 	}
 	else
 	{
-		printf("File: %s\n", line);
+		printf("line from main: %s\n", line);
 	}
-	// return (0);
+	return (0);
 }
 
