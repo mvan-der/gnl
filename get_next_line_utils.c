@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:23:29 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/09 17:12:34 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/16 14:08:49 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,4 +114,53 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	}
 	dest[i] = '\0';
 	return (dest);
+}
+
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	char		*dptr;
+	const char	*sptr;
+	char		*enddest;
+	const char	*endsrc;
+
+	dptr = dest;
+	sptr = src;
+	enddest = dptr + (n - 1);
+	endsrc = sptr + (n - 1);
+	if (dptr == NULL && sptr == NULL)
+		return (0);
+	if (enddest < endsrc)
+	{
+		ft_memcpy(dest, src, n);
+		return (dest);
+	}
+	while (n)
+	{
+		*enddest = *endsrc;
+		enddest--;
+		endsrc--;
+		n--;
+	}
+	return (dest);
+}
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	char	*a;
+	char	*b;
+	size_t	i;
+
+	a = (char *)dest;
+	b = (char *)src;
+	i = 0;
+	if (src != 0 || dest != 0)
+	{
+		while (i < n)
+		{
+			a[i] = b[i];
+			i++;
+		}
+		return (a);
+	}
+	return (a);
 }
