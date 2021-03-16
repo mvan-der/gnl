@@ -6,11 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:21:53 by mvan-der      #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2021/03/16 17:38:28 by mvan-der      ########   odam.nl         */
-=======
-/*   Updated: 2021/03/09 20:39:32 by mvan-der      ########   odam.nl         */
->>>>>>> 483045856b8a1ff589fdb941f6050d812976d0c1
+/*   Updated: 2021/03/16 17:42:18 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +45,6 @@ int	get_next_line(int fd, char **line)
 	found = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
-<<<<<<< HEAD
 	// step 1: check buffer if there is still something in it, if yes then  check buffer for newline
 	// 			and return (1) if found, if not found strdup/strjoin, memmove buffer accordingly
 	// step 2: read into buffer
@@ -60,14 +55,6 @@ int	get_next_line(int fd, char **line)
 	// step 1
 	if (*line) //find  newline before  next read
 	{
-=======
-	ft_memset(buffer, 0, BUFFER_SIZE + 1);
-	while (read_ret > 0)
-	{
-		read_ret = read(fd, buffer, BUFFER_SIZE);
-		if (read_ret == 0)
-			break ;
->>>>>>> 483045856b8a1ff589fdb941f6050d812976d0c1
 		j = find_newline(buffer, &found);
 		if (found == 1)
 		{
