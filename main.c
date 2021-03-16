@@ -6,7 +6,11 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/01 10:26:16 by mvan-der      #+#    #+#                 */
+<<<<<<< HEAD
 /*   Updated: 2021/03/16 16:41:12 by mvan-der      ########   odam.nl         */
+=======
+/*   Updated: 2021/03/09 20:28:54 by mvan-der      ########   odam.nl         */
+>>>>>>> 483045856b8a1ff589fdb941f6050d812976d0c1
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +39,7 @@ int main()
 	}
 	line = 0;
 	ret = get_next_line(fd, &line);
+<<<<<<< HEAD
 	// if (ret == -1)
 	// {
 	// 	printf("failure to read file\n");
@@ -64,6 +69,18 @@ int main()
 		free(line);
 	}
 	// free(line);
+=======
+	if (ret == -1)
+	{
+		printf("failure to read file\n");
+		return (0);
+	}
+	else
+	{
+		printf("line from main: %s\n", line);
+	}
+	free(line);
+>>>>>>> 483045856b8a1ff589fdb941f6050d812976d0c1
 	return (0);
 }
 
