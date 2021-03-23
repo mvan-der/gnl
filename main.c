@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/01 10:26:16 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/16 17:42:20 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/23 17:55:08 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int main()
 	// else
 	// {
 		// printf("line from main: %s\n", line);
+	// printf("%d\n", ret);
+
 	while (ret > 0)
 	{
 		write(1, line, strlen(line));
@@ -63,6 +65,18 @@ int main()
 		write(1, "Error!", 6);
 		free(line);
 	}
+
+	// char			*lineadress[4];
+	// int j = 1;
+	// while ((ret = get_next_line(fd, &line)) > 0)
+	// {
+	// 	printf("|%s\n", line);
+	// 	lineadress[j - 1] = line;
+	// 	j++;
+	// }
+	// printf("|%s\n", line);
+	// free(line);
+	close(fd);
 	// free(line);
 	return (0);
 }
