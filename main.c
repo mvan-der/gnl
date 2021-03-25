@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/12/01 10:26:16 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/23 17:55:08 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/25 16:10:11 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int main()
 	if (ret == -1)
 	{
 		write(1, "Error!", 6);
+		write(1, "\n", 1);
 		free(line);
 	}
 

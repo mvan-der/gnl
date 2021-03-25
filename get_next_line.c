@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/11/24 11:21:53 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/23 12:49:17 by mvan-der      ########   odam.nl         */
+/*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
+/*   Updated: 2021/03/25 17:05:26 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,77 +15,100 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int	find_newline(char *buffer, int *found)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	char	*a;
+	char	*b;
+	size_t	i;
+
+	a = (char *)dest;
+	b = (char *)src;
+	i = 0;
+	if (src != 0 || dest != 0)
+	{
+		while (i < n)
+		{
+			a[i] = b[i];
+			i++;
+		}
+		return (a);
+	}
+	return (a);
+}
+
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	char		*dptr;
+	const char	*sptr;
+	char		*enddest;
+	const char	*endsrc;
+
+	dptr = dest;
+	sptr = src;
+	enddest = dptr + (n - 1);
+	endsrc = sptr + (n - 1);
+	if (dptr == NULL && sptr == NULL)
+		return (0);
+	if (enddest < endsrc)
+	{
+		ft_memcpy(dest, src, n);
+		return (dest);
+	}
+	while (n)
+	{
+		*enddest = *endsrc;
+		enddest--;
+		endsrc--;
+		n--;
+	}
+	return (dest);
+}
+
+int	find_newline(char *s)
 {
 	int	i;
 
 	i = 0;
-	while (buffer[i] && i < BUFFER_SIZE)
-	{
-		if (buffer[i] == '\n')
-		{
-			*found = 1;
-			break ;
-		}
+	if (!s)
+		return (-1);
+	while (s[i] && (s[i] != '\n'))
 		i++;
-	}
+	if (s[i] != '\n')
+		return (-1);
 	return (i);
+}
+
+int	get_line(char **line, char *result, int j)
+{
+	*line = ft_substr(result, 0, j);
+	ft_memmove(result, result + j + 1, (ft_strlen(result + j) + 1));
+	return (1);
 }
 
 int	get_next_line(int fd, char **line)
 {
-	int			read_ret;
-	static char	buffer[BUFFER_SIZE + 1];
-	char		*temp;
-	int			found;
-	int		j;
+	int			ret;
+	char		buffer[BUFFER_SIZE + 1];
+	static char	*result = NULL;
+	int			j;
 
-	ft_memset(buffer, 0, BUFFER_SIZE + 1);
-	read_ret = 999;
-	found = 0;
-	temp = 0;
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
-	// step 1: check buffer if there is still something in it, if yes then  check buffer for newline
-	// 			and return (1) if found, if not found strdup/strjoin, memmove buffer accordingly
-	// step 2: read into buffer
-	// step 3: check for newline in buffer
-	// step 4: if found, strjoin up until newline into *line, shift remainder to first position in buffer
-	// step 5: if not found, go back to step 1
-	
-	// step 1
-	if (*line) //find  newline before  next read
+	if (result)
+		j = find_newline(result);
+	if (result && j != -1)
+		return (get_line(line, result, j));
+	while (ret > 0)
 	{
-		j = find_newline(temp, &found);
-		if (found == 1)
-		{
-			*line = ft_strjoin(*line, ft_substr(buffer, 0, j));
-			ft_memmove(&temp[0], &temp[j + 1], ft_strlen(temp) - j);
-			return(found);
-		}
-		// *line = ft_strjoin(*line, buffer); 
+		ret = read(fd, buffer, BUFFER_SIZE);
+		buffer[ret] = '\0';
+		result = gnl_strjoin(result, buffer);
+		j = find_newline(result);
+		if (result && j != -1)
+			return (get_line(line, result, j));
 	}
-	if (!*line) //?? first time calling the function is the only time this true at which point buffer is also empty..? removing causes seg fault
-	{
-		*line = ft_strdup(buffer);
-	}
-	// printf("line1: %s\n", *line);
-	// printf("buffer: %s\n", buffer);
-	// step 2
-	ft_memset(buffer, 0, BUFFER_SIZE + 1);
-	read_ret = read(fd, buffer, BUFFER_SIZE);
-	if (read_ret == -1)
-		return (-1);
-	// step 3
-	j = find_newline(buffer, &found);
-	// step 4
-	if (found == 1)
-	{
-		*line = ft_strjoin(*line, ft_substr(buffer, 0, j));
-		temp = ft_substr(buffer, j + 1, ft_strlen(buffer) - j);
-		printf("temp: %s\n", temp);
-		// ft_memmove(&buffer[0], ;&buffer[j + 1], ft_strlen(buffer) - j);
-		return(found);
-	}
+	*line = ft_strdup(result);
+	free(result);
+	result = NULL;
 	return (0);
 }

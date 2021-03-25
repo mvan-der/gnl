@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:22:26 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/23 16:56:10 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/25 16:34:55 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,14 @@
 #include <stddef.h>
 
 int		get_next_line(int fd, char **line);
-int		find_newline(char *buffer, int *found);
+int		find_newline(char *buffer);
+int		get_line(char **line, char *result, int j);
 size_t	ft_strlen(const char *s);
-char	*ft_strjoin(char const *s1, char const *s2);
-void	*ft_memset(void *s, int c, size_t n);
+char	*gnl_strjoin(char *s1, char *s2);
 char	*ft_strdup(const char *s);
 char	*ft_substr(const char *s, unsigned int start, size_t len);
 void	*ft_memmove(void *dest, const void *src, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_calloc(size_t nmemb, size_t size);
-size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-size_t	ft_strlcat(char *dest, const char *src, size_t size);
 
 #endif
