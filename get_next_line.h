@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:22:26 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/30 13:38:07 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/30 14:44:23 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #  define BUFFER_SIZE 32
 # endif
 
-#include <stddef.h>
+# include <stddef.h>
+# include <stdlib.h>
 
 int		get_next_line(int fd, char **line);
 int		find_newline(char *buffer);

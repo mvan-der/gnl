@@ -6,14 +6,11 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:23:29 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/25 17:03:41 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/30 14:44:27 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
-#include <stddef.h>
-#include <stdlib.h>
 
 size_t	ft_strlen(const char *s)
 {
