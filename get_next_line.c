@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/25 17:05:26 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/03/30 13:41:20 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,23 +89,22 @@ int	get_next_line(int fd, char **line)
 {
 	int			ret;
 	char		buffer[BUFFER_SIZE + 1];
-	static char	*result = NULL;
-	int			j;
+	static char	*result;
 
+	ret = 999;
 	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
 		return (-1);
-	if (result)
-		j = find_newline(result);
-	if (result && j != -1)
-		return (get_line(line, result, j));
+	if (result && (find_newline(result) != -1))
+		return (get_line(line, result, find_newline(result)));
 	while (ret > 0)
 	{
 		ret = read(fd, buffer, BUFFER_SIZE);
+		if (ret == -1)
+			return (ret);
 		buffer[ret] = '\0';
 		result = gnl_strjoin(result, buffer);
-		j = find_newline(result);
-		if (result && j != -1)
-			return (get_line(line, result, j));
+		if (result && (find_newline(result) != -1))
+			return (get_line(line, result, find_newline(result)));
 	}
 	*line = ft_strdup(result);
 	free(result);
