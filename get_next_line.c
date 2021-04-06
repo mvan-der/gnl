@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/30 14:44:31 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/04/06 16:58:02 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	get_next_line(int fd, char **line)
 	static char	*result;
 
 	ret = 999;
-	if (fd < 0 || BUFFER_SIZE <= 0 || !line)
+	if (fd < 0 || BUFFER_SIZE <= 0 || !line || read(fd, 0 , 0) < 0)
 		return (-1);
 	if (result && (find_newline(result) != -1))
 		return (get_line(line, result, find_newline(result)));
