@@ -6,60 +6,26 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/04/06 16:58:02 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/03 16:59:27 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <unistd.h>
 
-void	*ft_memcpy(void *dest, const void *src, size_t n)
+void	fix_buffer(char *buffer, int k)
 {
-	char	*a;
-	char	*b;
-	size_t	i;
+	int	i;
 
-	a = (char *)dest;
-	b = (char *)src;
 	i = 0;
-	if (src != 0 || dest != 0)
+	if (buffer[k])
+		k++;
+	while (buffer[k] != '\0')
 	{
-		while (i < n)
-		{
-			a[i] = b[i];
-			i++;
-		}
-		return (a);
+		buffer[i] = buffer[k];
+		i++;
+		k++;
 	}
-	return (a);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	char		*dptr;
-	const char	*sptr;
-	char		*enddest;
-	const char	*endsrc;
-
-	dptr = dest;
-	sptr = src;
-	enddest = dptr + (n - 1);
-	endsrc = sptr + (n - 1);
-	if (dptr == NULL && sptr == NULL)
-		return (0);
-	if (enddest < endsrc)
-	{
-		ft_memcpy(dest, src, n);
-		return (dest);
-	}
-	while (n)
-	{
-		*enddest = *endsrc;
-		enddest--;
-		endsrc--;
-		n--;
-	}
-	return (dest);
+	buffer[i] = '\0';
 }
 
 int	find_newline(char *s)
@@ -79,7 +45,7 @@ int	find_newline(char *s)
 int	get_line(char **line, char *result, int j)
 {
 	*line = ft_substr(result, 0, j);
-	ft_memmove(result, result + j + 1, (ft_strlen(result + j) + 1));
+	fix_buffer(result, j);
 	return (1);
 }
 
@@ -90,7 +56,7 @@ int	get_next_line(int fd, char **line)
 	static char	*result;
 
 	ret = 999;
-	if (fd < 0 || BUFFER_SIZE <= 0 || !line || read(fd, 0 , 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || !line || read(fd, 0, 0) < 0)
 		return (-1);
 	if (result && (find_newline(result) != -1))
 		return (get_line(line, result, find_newline(result)));
