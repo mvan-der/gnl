@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/03 16:59:27 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/04 15:27:17 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ int	find_newline(char *s)
 int	get_line(char **line, char *result, int j)
 {
 	*line = ft_substr(result, 0, j);
+	if (!*line)
+	{
+		free(result);
+		return (-1);
+	}
 	fix_buffer(result, j);
 	return (1);
 }
@@ -67,10 +72,20 @@ int	get_next_line(int fd, char **line)
 			return (ret);
 		buffer[ret] = '\0';
 		result = gnl_strjoin(result, buffer);
+		// if (result == NULL)
+		// {
+		// 	free(result);
+		// 	return (-1);
+		// }
 		if (result && (find_newline(result) != -1))
 			return (get_line(line, result, find_newline(result)));
 	}
 	*line = ft_strdup(result);
+	if (!line)
+	{
+		free(result);
+		return (-1);
+	}
 	free(result);
 	result = NULL;
 	return (0);

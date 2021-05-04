@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:23:29 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/03/30 14:44:27 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/04 13:38:18 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*gnl_strjoin(char *s1, char *s2)
 		return (ft_strdup(s2));
 	newstr = ft_calloc(sizeof(char), ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!newstr)
-		return (0);
+		return (NULL);
 	i = 0;
 	j = ft_strlen(s1);
 	while (s1[i])
@@ -60,8 +60,8 @@ char	*ft_strdup(const char *s)
 	while (s[i] != '\0')
 		i++;
 	dest = malloc(i + 1);
-	if (dest == 0)
-		return (0);
+	if (!dest)
+		return (NULL);
 	i = 0;
 	while (s[i] != '\0')
 	{
