@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/05 16:19:44 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/05 18:48:33 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 	return (dest);
 }
 
-void	fix_buffer(char *buffer, int k)
-{
-	int	i;
-
-	i = 0;
-	if (buffer[k])
-		k++;
-	while (buffer[k] != '\0')
-	{
-		buffer[i] = buffer[k];
-		i++;
-		k++;
-	}
-	buffer[i] = '\0';
-}
-
 int	find_newline(char *s)
 {
 	int	i;
@@ -70,19 +54,39 @@ int	find_newline(char *s)
 
 int	get_line(char **line, char *result, int j)
 {
+	int	i;
+
+	i = 0;
 	*line = ft_substr(result, 0, j);
 	if (!*line)
 	{
 		free(result);
 		return (-1);
 	}
-	fix_buffer(result, j);
+	if (result[j])
+		j++;
+	while (result[j] != '\0')
+	{
+		result[i] = result[j];
+		i++;
+		j++;
+	}
+	result[i] = '\0';
 	return (1);
+}
+
+int	left_overs(char **line, char *result)
+{
+	*line = ft_strdup(result);
+	if (!*line)
+		return (-1);
+	return (0);
 }
 
 int	get_next_line(int fd, char **line)
 {
 	int			ret;
+	int			end_of_story;
 	char		buffer[BUFFER_SIZE + 1];
 	static char	*result;
 
@@ -94,8 +98,6 @@ int	get_next_line(int fd, char **line)
 	while (ret > 0)
 	{
 		ret = read(fd, buffer, BUFFER_SIZE);
-		if (ret == -1)
-			return (ret);
 		buffer[ret] = '\0';
 		result = gnl_strjoin(result, buffer);
 		if (result == NULL)
@@ -103,13 +105,8 @@ int	get_next_line(int fd, char **line)
 		if (result && (find_newline(result) != -1))
 			return (get_line(line, result, find_newline(result)));
 	}
-	*line = ft_strdup(result);
-	if (!*line)
-	{
-		free(result);
-		return (-1);
-	}
+	end_of_story = left_overs(line, result);
 	free(result);
 	result = NULL;
-	return (0);
+	return (end_of_story);
 }
