@@ -6,11 +6,29 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:23:29 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/04 13:38:18 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/05 16:13:31 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strcpy(char *dest, char *src)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	if (!src)
+		return (0);
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (i);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -32,14 +50,13 @@ char	*gnl_strjoin(char *s1, char *s2)
 		return (ft_strdup(s2));
 	newstr = ft_calloc(sizeof(char), ft_strlen(s1) + ft_strlen(s2) + 1);
 	if (!newstr)
+	{
+		free(s1);
 		return (NULL);
+	}
 	i = 0;
 	j = ft_strlen(s1);
-	while (s1[i])
-	{
-		newstr[i] = s1[i];
-		i++;
-	}
+	ft_strcpy(newstr, s1);
 	free(s1);
 	s1 = NULL;
 	i = 0;
@@ -67,32 +84,6 @@ char	*ft_strdup(const char *s)
 	{
 		dest[i] = s[i];
 		i++;
-	}
-	dest[i] = '\0';
-	return (dest);
-}
-
-char	*ft_substr(const char *s, unsigned int start, size_t len)
-{
-	char	*dest;
-	size_t	i;
-	size_t	check;
-
-	check = ft_strlen(s);
-	dest = malloc(sizeof(char) * len + 1);
-	if (dest == 0)
-		return (0);
-	i = 0;
-	if (start > check)
-	{
-		dest[i] = '\0';
-		return (dest);
-	}
-	while (s[start] != '\0' && i < len)
-	{
-		dest[i] = s[start];
-		i++;
-		start++;
 	}
 	dest[i] = '\0';
 	return (dest);

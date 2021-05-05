@@ -6,11 +6,37 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/04 15:27:17 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/05 16:19:44 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+char	*ft_substr(const char *s, unsigned int start, size_t len)
+{
+	char	*dest;
+	size_t	i;
+	size_t	check;
+
+	check = ft_strlen(s);
+	dest = malloc(sizeof(char) * len + 1);
+	if (!dest)
+		return (NULL);
+	i = 0;
+	if (start > check)
+	{
+		dest[i] = '\0';
+		return (dest);
+	}
+	while (s[start] != '\0' && i < len)
+	{
+		dest[i] = s[start];
+		i++;
+		start++;
+	}
+	dest[i] ='\0';
+	return (dest);
+}
 
 void	fix_buffer(char *buffer, int k)
 {
@@ -72,16 +98,13 @@ int	get_next_line(int fd, char **line)
 			return (ret);
 		buffer[ret] = '\0';
 		result = gnl_strjoin(result, buffer);
-		// if (result == NULL)
-		// {
-		// 	free(result);
-		// 	return (-1);
-		// }
+		if (result == NULL)
+			return (-1);
 		if (result && (find_newline(result) != -1))
 			return (get_line(line, result, find_newline(result)));
 	}
 	*line = ft_strdup(result);
-	if (!line)
+	if (!*line)
 	{
 		free(result);
 		return (-1);

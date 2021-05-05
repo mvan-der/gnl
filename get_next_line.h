@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:22:26 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/03 16:59:34 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/05 16:04:43 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,6 @@ char	*ft_substr(const char *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s);
 char	*gnl_strjoin(char *s1, char *s2);
 size_t	ft_strlen(const char *s);
+size_t	ft_strcpy(char *dest, char *src);
 
 #endif
