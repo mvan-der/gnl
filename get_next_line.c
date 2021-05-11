@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/05 18:48:33 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/11 10:41:35 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,9 @@ int	get_line(char **line, char *result, int j)
 	return (1);
 }
 
-int	left_overs(char **line, char *result)
-{
-	*line = ft_strdup(result);
-	if (!*line)
-		return (-1);
-	return (0);
-}
-
 int	get_next_line(int fd, char **line)
 {
 	int			ret;
-	int			end_of_story;
 	char		buffer[BUFFER_SIZE + 1];
 	static char	*result;
 
@@ -105,8 +96,10 @@ int	get_next_line(int fd, char **line)
 		if (result && (find_newline(result) != -1))
 			return (get_line(line, result, find_newline(result)));
 	}
-	end_of_story = left_overs(line, result);
+	*line = ft_strdup(result);
+	if (!*line)
+		return (-1);
 	free(result);
 	result = NULL;
-	return (end_of_story);
+	return (0);
 }
