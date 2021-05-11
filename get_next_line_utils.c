@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:23:29 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/05 16:13:31 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/05 23:59:49 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 size_t	ft_strcpy(char *dest, char *src)
 {
 	size_t	i;
-	size_t	j;
 
 	i = 0;
-	j = 0;
 	if (!src)
 		return (0);
 	while (src[i] != '\0')
