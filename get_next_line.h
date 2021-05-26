@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:22:26 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/11 11:02:36 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/26 12:11:55 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@
 # endif
 
 # include <stddef.h>
-# include <stdlib.h>
-# include <unistd.h>
 
 int		get_next_line(int fd, char **line);
 int		get_line(char **line, char *result, int j);

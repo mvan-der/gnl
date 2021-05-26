@@ -6,11 +6,12 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/11/24 11:23:29 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/26 09:57:04 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/26 12:11:38 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdlib.h>
 
 size_t	ft_strcpy(char *dest, char *src)
 {
@@ -42,7 +43,6 @@ char	*gnl_strjoin(char *s1, char *s2)
 {
 	char	*newstr;
 	int		i;
-	int		j;
 
 	if (!s1)
 		return (ft_strdup(s2));
@@ -52,17 +52,11 @@ char	*gnl_strjoin(char *s1, char *s2)
 		free(s1);
 		return (NULL);
 	}
-	i = 0;
-	j = ft_strlen(s1);
+	i = ft_strlen(s1);
 	ft_strcpy(newstr, s1);
 	free(s1);
 	s1 = NULL;
-	i = 0;
-	while (s2[i])
-	{
-		newstr[j + i] = s2[i];
-		i++;
-	}
+	ft_strcpy(newstr + i, s2);
 	return (newstr);
 }
 

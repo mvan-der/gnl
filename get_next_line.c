@@ -6,11 +6,13 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/26 09:53:44 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/26 12:12:14 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stdlib.h>
+#include <unistd.h>
 
 char	*ft_substr(const char *s, unsigned int start, size_t len)
 {
@@ -34,7 +36,7 @@ char	*ft_substr(const char *s, unsigned int start, size_t len)
 		i++;
 		start++;
 	}
-	dest[i] ='\0';
+	dest[i] = '\0';
 	return (dest);
 }
 
