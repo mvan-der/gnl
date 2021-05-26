@@ -6,7 +6,7 @@
 /*   By: mvan-der <mvan-der@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2021/03/25 13:18:17 by mvan-der      #+#    #+#                 */
-/*   Updated: 2021/05/11 10:41:35 by mvan-der      ########   odam.nl         */
+/*   Updated: 2021/05/26 09:53:44 by mvan-der      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,15 @@ int	get_next_line(int fd, char **line)
 		ret = read(fd, buffer, BUFFER_SIZE);
 		buffer[ret] = '\0';
 		result = gnl_strjoin(result, buffer);
-		if (result == NULL)
+		if (!result)
 			return (-1);
 		if (result && (find_newline(result) != -1))
 			return (get_line(line, result, find_newline(result)));
 	}
 	*line = ft_strdup(result);
-	if (!*line)
-		return (-1);
 	free(result);
 	result = NULL;
+	if (!*line)
+		return (-1);
 	return (0);
 }
